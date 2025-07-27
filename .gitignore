@@ -17,6 +17,7 @@
 .env.*                # Specific environment variable files
 
 # --- Node.js & npm (for backend/ and any JS tooling) ---
+node_modules/         # Node.js dependencies at root level
 **/node_modules/      # Node.js dependencies in any subdirectory
 **/npm-debug.log      # npm debug logs
 **/yarn-error.log     # Yarn error logs
