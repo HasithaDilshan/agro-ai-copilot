@@ -1,0 +1,25 @@
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "agroai-phoenix",
+                    "appId": "1:91469188214:android:edd7c206b5aae16a5ca357",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "agroai-phoenix",
+                    "configurations": {
+                        "android": "1:91469188214:android:edd7c206b5aae16a5ca357",
+                        "ios": "1:91469188214:ios:68f07725f3eed8e45ca357",
+                        "macos": "1:91469188214:ios:68f07725f3eed8e45ca357",
+                        "web": "1:91469188214:web:b25c82f38112dd9b5ca357",
+                        "windows": "1:91469188214:web:2018f9cbbb4f976d5ca357"
+                    }
+                }
+            }
+        }
+    }
+}

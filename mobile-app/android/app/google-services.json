@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "91469188214",
+    "project_id": "agroai-phoenix",
+    "storage_bucket": "agroai-phoenix.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91469188214:android:edd7c206b5aae16a5ca357",
+        "android_client_info": {
+          "package_name": "com.example.agroai_mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5rOVqFxY_stIjoMnrr28Fa0jqYtdbQK4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
