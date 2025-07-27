@@ -1,0 +1,60 @@
+name: AgroAI CI
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'documentation/**' # Skip CI for documentation changes
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, reopened]
+
+jobs:
+  lint-and-test-mobile:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile-app/
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter test
+
+  lint-and-test-backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend/
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+      - run: npm run lint # Assuming you'll add a lint script
+      - run: npm test # Assuming you'll add test scripts
+
+  # Add similar jobs for each AI module as they mature,
+  # e.g., to run Python linters (flake8, black) and unit tests for ML code.
+  # For example, a Python job:
+  # lint-and-test-python-modules:
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       module: [module1-edge-ai, module2-knowledge-graph, module3-multimodal-fusion, module4-rl-optimization]
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-python@v5
+  #       with:
+  #         python-version: '3.10'
+  #     - working-directory: ${{ matrix.module }}
+  #       run: |
+  #         pip install -r requirements.txt
+  #         flake8 .
+  #         pytest
