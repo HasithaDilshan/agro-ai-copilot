@@ -9,9 +9,9 @@ if (!admin.apps.length) {
 
 // This function acts as a mock for Module 1's inference trigger
 // It's an HTTPS callable function for simplicity in this mock
-export const processPlantImage = functions.https.onCall(async (data, context) => {
+export const processPlantImage = functions.https.onCall(async (data: any, context) => {
   const imageUrl = data.imageUrl as string;
-  const imagePath = data.imagePath as string; // Path in storage, if needed
+  // const imagePath = data.imagePath as string; // Path in storage, if needed
 
   if (!imageUrl) {
     throw new functions.https.HttpsError('invalid-argument', 'The image URL is required.');

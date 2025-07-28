@@ -25,6 +25,9 @@ node_modules/         # Node.js dependencies at root level
 **/lib/               # Compiled TypeScript output (Firebase Functions typically output here)
 .firebase/            # Firebase local emulator data (e.g., emulator-firestore.backup)
 .history/             # VS Code Local History extension files
+package-lock.json     # Package lock file at root level
+**/firebase-debug.log # Firebase debug logs
+**/firestore-debug.log # Firestore debug logs
 
 # --- Python (for Module 1, 2, 3, 4) ---
 **/__pycache__/       # Python byte-code cache
@@ -157,6 +160,9 @@ mobile-app/google-services.json       # Android Firebase config
 .firebase/                            # Firebase local emulator data (repeated for clarity)
 # .firebaserc                          # Often *should* be committed if project aliases are shared, but ignore if developers use different project IDs locally
 firebase-debug.log                    # Firebase CLI debug logs
+firestore-debug.log                   # Firestore emulator debug logs
+ui-debug.log                          # Firebase UI debug logs
+functions-debug.log                   # Functions emulator debug logs
 
 # --- Documentation specific ignores ---
 documentation/.DS_Store

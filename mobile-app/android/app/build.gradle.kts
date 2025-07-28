@@ -10,8 +10,8 @@ plugins {
 
 android {
     namespace = "com.example.agroai_mobile"
-    compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    compileSdk = 35 // Updated to latest
+    ndkVersion = "27.2.12479018" // Updated to NDK 27
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -27,8 +27,8 @@ android {
         applicationId = "com.example.agroai_mobile"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        minSdk = 21 // Updated minimum SDK
+        targetSdk = 35 // Updated to latest
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
