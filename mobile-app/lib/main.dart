@@ -21,9 +21,7 @@ void main() async {
   if (kDebugMode) {
     try {
       // Adjust IP for Android emulator (10.0.2.2) vs. iOS/Web/Desktop (localhost)
-      final emulatorHost = defaultTargetPlatform == TargetPlatform.android
-          ? "10.0.2.2"
-          : "localhost";
+      final emulatorHost = "localhost";
 
       FirebaseFirestore.instance.useFirestoreEmulator(emulatorHost, 8080);
       FirebaseStorage.instance.useStorageEmulator(emulatorHost, 9199);
