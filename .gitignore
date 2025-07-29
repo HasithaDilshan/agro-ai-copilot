@@ -47,10 +47,65 @@ venv/                 # Another common name for virtual environment
 .tox/                 # Tox testing directory
 .pytest_cache/        # pytest cache directory
 .ipynb_checkpoints/   # Jupyter Notebook checkpoints
-data/                 # Large datasets (if stored locally and not versioned)
-models/               # Trained models (if large and not stored in Git LFS or external storage)
+
+# --- Module-Specific Data & Model Ignores ---
+# Module 1 (Edge AI) Specific Ignores
+module1-edge-ai/data/PlantVillage_Raw/         # Raw extracted dataset
+module1-edge-ai/data/PlantVillage_Subset/      # Subset created by script
+module1-edge-ai/data/*.zip                     # Downloaded zip files
+module1-edge-ai/trained_models/                # Ignore all content within trained_models
+module1-edge-ai/experiments/                   # Ignore all content within experiments
+
+# Module 2 (Knowledge Graph) Specific Ignores
+module2-knowledge-graph/data/raw_texts/         # Raw agricultural texts
+module2-knowledge-graph/data/processed/         # Processed knowledge base
+module2-knowledge-graph/data/*.zip              # Downloaded zip files
+module2-knowledge-graph/data/faiss_indexes/     # FAISS vector indexes
+module2-knowledge-graph/data/neo4j_dumps/       # Neo4j database dumps
+module2-knowledge-graph/trained_models/         # Ignore all content within trained_models
+module2-knowledge-graph/experiments/            # Ignore all content within experiments
+
+# Module 3 (Multimodal Fusion) Specific Ignores
+module3-multimodal-fusion/data/weather_data/    # Historical weather datasets
+module3-multimodal-fusion/data/soil_data/       # Soil composition datasets
+module3-multimodal-fusion/data/fused_datasets/  # Combined multimodal datasets
+module3-multimodal-fusion/data/*.zip            # Downloaded zip files
+module3-multimodal-fusion/trained_models/       # Ignore all content within trained_models
+module3-multimodal-fusion/experiments/          # Ignore all content within experiments
+
+# Module 4 (RL Optimization) Specific Ignores
+module4-rl-optimization/data/historical_data/   # 20 years of Sri Lankan agricultural data
+module4-rl-optimization/data/market_data/       # Market price historical data
+module4-rl-optimization/data/simulation_runs/   # RL simulation outputs
+module4-rl-optimization/data/*.zip              # Downloaded zip files
+module4-rl-optimization/trained_models/         # Ignore all content within trained_models
+module4-rl-optimization/experiments/            # Ignore all content within experiments
+
+# General patterns for all modules
 */checkpoint/         # Model checkpoints
 */runs/               # TensorBoard logs or MLflow runs
+
+# Exception: Small configuration files that SHOULD be committed
+!module1-edge-ai/data/class_names.txt          # Class names mapping (small, important)
+!module2-knowledge-graph/data/config/          # Small config files
+!module3-multimodal-fusion/data/config/        # Small config files  
+!module4-rl-optimization/data/config/          # Small config files
+!**/requirements.txt                           # Always commit requirements
+!**/README.md                                  # Always commit documentation
+
+# Specific model file patterns for all modules
+**/*.h5               # Keras/TensorFlow model files
+**/*.pb               # TensorFlow SavedModel files
+**/*.tflite           # TensorFlow Lite model files
+**/*.onnx             # ONNX model files
+**/*.pkl              # Pickle files (often used for scikit-learn models)
+**/*.joblib           # Joblib files (sklearn model serialization)
+**/*.pth              # PyTorch model files
+**/*.pt               # PyTorch model files
+**/*.bin              # Binary model files (often used by transformers)
+**/*.safetensors      # SafeTensors model files
+**/*.weights          # Model weight files
+
 # For generated documentation if you use Sphinx/MkDocs within a module:
 **/_build/
 **/html/
