@@ -8,7 +8,7 @@ class WeightedFocalLoss(tf.keras.losses.Loss):
     with additional weighting for rare classes.
     """
 
-    def __init__(self, gamma=2.0, alpha=None, name="weighted_focal_loss", **kwargs):
+    def __init__(self, gamma=2.0, alpha=None, name="weighted_focal_loss", reduction="sum_over_batch_size", **kwargs):
         """
         Initializes the WeightedFocalLoss.
 
@@ -17,13 +17,27 @@ class WeightedFocalLoss(tf.keras.losses.Loss):
             alpha (tf.Tensor or None): A 1D tensor of shape (num_classes,) containing
                                         per-class weighting factors. If None, no alpha weighting is applied.
             name (str): Name of the loss function.
+            reduction (str): Type of reduction to apply to the loss. Defaults to "sum_over_batch_size".
             **kwargs: Keyword arguments for the base tf.keras.losses.Loss class.
-                      This is crucial for proper serialization, as Keras might pass
-                      arguments like 'reduction' automatically.
         """
-        super().__init__(name=name, **kwargs)  # Pass kwargs to the base class
-        self.gamma = gamma
-        self.alpha = tf.constant(alpha, dtype=tf.float32) if alpha is not None else None
+        super().__init__(name=name, reduction=reduction, **kwargs)  # Pass reduction explicitly
+        self.gamma = float(gamma)  # Ensure gamma is a float
+        
+        # Handle alpha parameter - it might come as a list from deserialization
+        if alpha is not None:
+            try:
+                if isinstance(alpha, (list, tuple)):
+                    self.alpha = tf.constant(alpha, dtype=tf.float32)
+                elif isinstance(alpha, tf.Tensor):
+                    self.alpha = tf.cast(alpha, tf.float32)
+                else:
+                    # Handle numpy arrays or other array-like objects
+                    self.alpha = tf.constant(alpha, dtype=tf.float32)
+            except Exception as e:
+                print(f"Warning: Could not convert alpha to tensor: {e}. Setting alpha to None.")
+                self.alpha = None
+        else:
+            self.alpha = None
 
     def call(self, y_true, y_pred):
         """
@@ -90,11 +104,17 @@ class WeightedFocalLoss(tf.keras.losses.Loss):
         Creates a loss instance from its config.
         This is also necessary for Keras to properly load custom objects.
         """
-        # The 'reduction' argument is typically added by Keras during serialization,
-        # but our __init__ and get_config correctly handle it via **kwargs.
-        # We need to ensure alpha is converted back to a tensor if it was saved as a list.
-        alpha = config.get("alpha")
-        if alpha is not None and isinstance(alpha, list):
-            config["alpha"] = alpha  # Keep as list, will be converted in __init__
-
-        return cls(**config)  # Pass all config values to __init__
+        # Create a copy of config to avoid modifying the original
+        config_copy = config.copy()
+        
+        # Ensure we have default values for all required parameters
+        if 'gamma' not in config_copy:
+            config_copy['gamma'] = 2.0
+        if 'alpha' not in config_copy:
+            config_copy['alpha'] = None
+        if 'name' not in config_copy:
+            config_copy['name'] = 'weighted_focal_loss'
+        if 'reduction' not in config_copy:
+            config_copy['reduction'] = 'sum_over_batch_size'
+            
+        return cls(**config_copy)
