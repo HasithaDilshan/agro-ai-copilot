@@ -102,19 +102,14 @@ class WeightedFocalLoss(tf.keras.losses.Loss):
     def from_config(cls, config):
         """
         Creates a loss instance from its config.
-        This is also necessary for Keras to properly load custom objects.
+        This is necessary for Keras to properly load custom objects.
+        Only passes parameters that our __init__ method accepts.
         """
-        # Create a copy of config to avoid modifying the original
-        config_copy = config.copy()
+        # Extract only the parameters that our __init__ method accepts
+        gamma = config.get('gamma', 2.0)
+        alpha = config.get('alpha', None)
+        name = config.get('name', 'weighted_focal_loss')
         
-        # Ensure we have default values for all required parameters
-        if 'gamma' not in config_copy:
-            config_copy['gamma'] = 2.0
-        if 'alpha' not in config_copy:
-            config_copy['alpha'] = None
-        if 'name' not in config_copy:
-            config_copy['name'] = 'weighted_focal_loss'
-        if 'reduction' not in config_copy:
-            config_copy['reduction'] = 'sum_over_batch_size'
-            
-        return cls(**config_copy)
+        # Explicitly create instance with only valid parameters
+        # This avoids passing 'reduction' or other Keras-added parameters
+        return cls(gamma=gamma, alpha=alpha, name=name)
