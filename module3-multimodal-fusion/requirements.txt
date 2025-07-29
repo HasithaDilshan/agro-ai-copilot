@@ -1,5 +1,7 @@
-# Example for module1-edge-ai/requirements.txt
-tensorflow==2.16.1
-numpy==1.26.4
-pillow==10.3.0
-# Add other specific dependencies as you identify them
+torch>=2.0.0
+pandas>=2.0.0
+numpy>=1.23.5
+scikit-learn>=1.2.2
+xgboost
+jupyter
+ipykernel
