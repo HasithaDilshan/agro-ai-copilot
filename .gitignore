@@ -245,3 +245,14 @@ backend/lib/
 # Firebase debug logs (explicit patterns)
 firebase-debug.log
 firestore-debug.log
+
+# Python virtual environments (explicit patterns)
+module1-edge-ai/.venv/
+module2-knowledge-graph/.venv/
+module3-multimodal-fusion/.venv/
+module4-rl-optimization/.venv/
+# Alternative venv naming patterns
+module1-edge-ai/venv/
+module2-knowledge-graph/venv/
+module3-multimodal-fusion/venv/
+module4-rl-optimization/venv/
