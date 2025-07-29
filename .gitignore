@@ -256,3 +256,85 @@ module1-edge-ai/venv/
 module2-knowledge-graph/venv/
 module3-multimodal-fusion/venv/
 module4-rl-optimization/venv/
+env, UV, Poetry, PDM, Pixi
+#Pipfile.lock
+#uv.lock
+#poetry.lock
+#poetry.toml
+#pdm.lock
+#pdm.toml
+.pdm-python
+.pdm-build/
+#pixi.lock
+.pixi
+__pypackages__/
+celerybeat-schedule
+celerybeat.pid
+*.sage.py
+
+# --- Flutter (for mobile-app/) ---
+mobile-app/.flutter-plugins           # Flutter plugin files
+mobile-app/.flutter-plugins-dependencies # Flutter plugin dependencies
+mobile-app/.dart_tool/                # Dart SDK internal files
+mobile-app/.packages                  # Dart package resolution file
+mobile-app/.pub/                      # Pub cache
+mobile-app/build/                     # Flutter build outputs (APK, IPA, web, etc.)
+mobile-app/ios/.symlinks/             # iOS symlinks
+mobile-app/ios/Flutter/Generated.xcconfig # Generated Xcode config
+mobile-app/ios/Pods/                  # CocoaPods dependencies
+mobile-app/ios/.last_build_id         # Last build ID for iOS
+mobile-app/android/.gradle/           # Gradle caches
+mobile-app/android/app/build/         # Android build outputs
+mobile-app/android/.idea/             # Android Studio specific config inside Android folder
+mobile-app/android/local.properties   # Android SDK local path
+mobile-app/android/**/debug.keystore  # Debug keystore (never commit production keystores!)
+mobile-app/android/captures/          # Android Studio captures
+mobile-app/lib/generated_plugin_registrant.dart # Generated Flutter plugin registrations
+# Firebase specific config for Flutter (if generated)
+mobile-app/firebase_app_id_file.json
+mobile-app/GoogleService-Info.plist   # iOS Firebase config
+mobile-app/google-services.json       # Android Firebase config
+
+# --- Firebase Specific Files (at root, if not already covered) ---
+.firebase/                            # Firebase local emulator data (repeated for clarity)
+# .firebaserc                          # Often *should* be committed if project aliases are shared, but ignore if developers use different project IDs locally
+
+# Firebase Debug Logs - Comprehensive patterns
+firebase-debug.log                    # Firebase CLI debug logs
+*firebase-debug.log                   # Firebase debug logs with prefix
+firestore-debug.log                   # Firestore emulator debug logs
+*firestore-debug.log                  # Firestore debug logs with prefix
+ui-debug.log                          # Firebase UI debug logs
+*ui-debug.log                         # UI debug logs with prefix
+functions-debug.log                   # Functions emulator debug logs
+*functions-debug.log                  # Functions debug logs with prefix
+database-debug.log                    # Realtime Database debug logs
+*database-debug.log                   # Database debug logs with prefix
+hosting-debug.log                     # Firebase Hosting debug logs
+*hosting-debug.log                    # Hosting debug logs with prefix
+storage-debug.log                     # Firebase Storage debug logs
+*storage-debug.log                    # Storage debug logs with prefix
+
+# --- Documentation specific ignores ---
+documentation/.DS_Store
+
+# Backend compiled output
+backend/lib/
+
+# Firebase debug logs (explicit patterns)
+firebase-debug.log
+firestore-debug.log
+
+# Python virtual environments (explicit patterns)
+module1-edge-ai/.venv/
+module2-knowledge-graph/.venv/
+module3-multimodal-fusion/.venv/
+module4-rl-optimization/.venv/
+# Alternative venv naming patterns
+module1-edge-ai/venv/
+module2-knowledge-graph/venv/
+module3-multimodal-fusion/venv/
+module4-rl-optimization/venv/
+
+# Backend temporary models directory
+backend/temp_models/
