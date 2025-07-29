@@ -93,7 +93,8 @@ class WeightedFocalLoss(tf.keras.losses.Loss):
         # The 'reduction' argument is typically added by Keras during serialization,
         # but our __init__ and get_config correctly handle it via **kwargs.
         # We need to ensure alpha is converted back to a tensor if it was saved as a list.
-        if config.get("alpha") is not None and isinstance(config["alpha"], list):
-            config["alpha"] = tf.constant(config["alpha"], dtype=tf.float32)
+        alpha = config.get("alpha")
+        if alpha is not None and isinstance(alpha, list):
+            config["alpha"] = alpha  # Keep as list, will be converted in __init__
 
         return cls(**config)  # Pass all config values to __init__
