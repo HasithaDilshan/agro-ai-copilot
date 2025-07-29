@@ -1,13 +1,48 @@
 import tensorflow as tf
-import os
 import numpy as np
+import os
+import sys # For manipulating sys.path
+import shutil # For potential cleanup like deleting previous runs
 
-# Import custom loss function needed for loading the model
-from src.loss_functions import WeightedFocalLoss
+# --- IMPORTANT: CLONE YOUR REPO OR SYNC VIA DRIVE ---
+# This section ensures your project code (including src/ and scripts/) is accessible.
+# Option A: Clone the repo directly into Colab's ephemeral environment (recommended for active development)
+# Make sure to update the URL with your actual GitHub repo URL
+REPO_URL = "https://github.com/HasithaDilshan/agro-ai-copilot" # <--- CUSTOMIZE THIS TO YOUR ACTUAL REPO URL
+REPO_NAME = "agro-ai-copilot"
+
+# Check if the repository is already cloned to avoid re-cloning on subsequent runs
+if not os.path.exists(REPO_NAME):
+    print(f"Cloning repository: {REPO_URL}")
+    !git clone {REPO_URL}
+    %cd {REPO_NAME}
+    # If using private repo, Colab will ask for credentials or you can set up SSH keys.
+else:
+    print(f"Repository '{REPO_NAME}' already cloned. Pulling latest changes...")
+    %cd {REPO_NAME}
+    !git pull origin main # Assuming your development is on main for simplicity, adjust if on feature branch
+
+# --- Navigate to the specific module directory ---
+# This ensures that 'src/' and 'scripts/' are relative to the current working directory
+%cd module1-edge-ai
+
+# Add project root (module1-edge-ai) to Python path to import from src/
+project_root_in_colab = os.getcwd() # This will be /content/agro-ai-copilot/module1-edge-ai
+if project_root_in_colab not in sys.path:
+    sys.path.insert(0, project_root_in_colab) # Add to the beginning of sys.path
+
+# Install module-specific dependencies from requirements.txt
+print(f"Installing requirements from: {os.path.join(project_root_in_colab, 'requirements.txt')}")
+!pip install -r requirements.txt
+!pip install opencv-python-headless # Often useful for image processing (if not already in requirements)
+
+# --- IMPORTANT: MOUNT GOOGLE DRIVE ---
+# This is crucial for accessing your persistently stored data and saving models.
+from google.colab import drive
+drive.mount('/content/drive')
 
 # --- DEFINE GOOGLE DRIVE PROJECT DATA PATHS (MATCHING drive_setup_project_data_dirs.ipynb) ---
-# IMPORTANT: This script should be run from Colab, after mounting Drive.
-# Ensure GOOGLE_DRIVE_PROJECT_ROOT matches the path you used in the setup notebook.
+# Ensure GOOGLE_DRIVE_PROJECT_ROOT matches the path you set in the setup notebook.
 GOOGLE_DRIVE_PROJECT_ROOT = '/content/drive/MyDrive/AgroAI_Project_Data' # <--- ENSURE THIS MATCHES YOUR SETUP!
 MODULE1_DRIVE_DATA_DIR = os.path.join(GOOGLE_DRIVE_PROJECT_ROOT, 'module1_edge_ai', 'data')
 MODULE1_DRIVE_MODELS_DIR = os.path.join(GOOGLE_DRIVE_PROJECT_ROOT, 'module1_edge_ai', 'trained_models')
@@ -20,6 +55,14 @@ if not os.path.exists(MODULE1_DRIVE_MODELS_DIR):
 
 print(f"Module 1 data will be accessed from: {MODULE1_DRIVE_DATA_DIR}")
 print(f"Module 1 models will be saved to: {MODULE1_DRIVE_MODELS_DIR}")
+
+# Import custom loss function needed for loading the model
+# This import will now work because module1-edge-ai (which contains src/) is in sys.path
+from src.loss_functions import WeightedFocalLoss
+
+print("Environment setup and imports complete.")
+print(f"TensorFlow version: {tf.__version__}")
+print(f"Num GPUs Available: {len(tf.config.list_physical_devices('GPU'))}")
 
 
 def convert_keras_to_tflite(keras_model_path, tflite_output_path, num_classes, representative_dataset_path=None):
@@ -36,6 +79,7 @@ def convert_keras_to_tflite(keras_model_path, tflite_output_path, num_classes, r
     """
     print(f"Loading Keras model from: {keras_model_path}")
     try:
+        # Load the Keras model, providing custom_objects for the WeightedFocalLoss
         model = tf.keras.models.load_model(
             keras_model_path,
             custom_objects={'WeightedFocalLoss': WeightedFocalLoss}
@@ -83,13 +127,19 @@ def convert_keras_to_tflite(keras_model_path, tflite_output_path, num_classes, r
     print(f"TFLite model saved to: {tflite_output_path}")
 
 if __name__ == "__main__":
-    # Paths for model and class names, now correctly referencing Google Drive
-    keras_model_path = os.path.join(MODULE1_DRIVE_MODELS_DIR, 'fp32_mvp_best_model.h5')
-    tflite_output_path = os.path.join(MODULE1_DRIVE_MODELS_DIR, 'fp32_mvp_model.tflite')
+    # Ensure the current directory is module1-edge-ai
+    if os.path.basename(os.getcwd()) != 'module1-edge-ai':
+        # This block ensures if the script is run standalone, it navigates correctly
+        # However, the top-level setup block handles this when run in notebook cells.
+        print("Script not run from module1-edge-ai directory. Adjusting path...")
+        current_script_path = os.path.abspath(__file__)
+        module_root = os.path.dirname(current_script_path)
+        sys.path.insert(0, module_root)
+        os.chdir(module_root)
 
-    # For full integer quantization (INT8), you'd use a path to a small subset of your training data
-    # For MVP, we'll stick to dynamic range quantization first.
-    # representative_data_dir = os.path.join(MODULE1_DRIVE_DATA_DIR, 'PlantVillage_Subset', 'val')
+    # Paths for model and class names, now correctly referencing Google Drive
+    keras_model_path = os.path.join(MODULE1_DRIVE_MODELS_DIR, 'fp32_mvp_best_final.h5') # This path comes from training notebook
+    tflite_output_path = os.path.join(MODULE1_DRIVE_MODELS_DIR, 'fp32_mvp_model.tflite')
 
     # Get number of classes from the saved class_names.txt in Google Drive
     class_names_path = os.path.join(MODULE1_DRIVE_DATA_DIR, 'class_names.txt')
