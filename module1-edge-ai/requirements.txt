@@ -6,3 +6,5 @@ scikit-learn>=1.2.2
 matplotlib>=3.7.1
 jupyter
 ipykernel
+numpy
+Pillow
