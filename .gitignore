@@ -164,13 +164,29 @@ mobile-app/google-services.json       # Android Firebase config
 # --- Firebase Specific Files (at root, if not already covered) ---
 .firebase/                            # Firebase local emulator data (repeated for clarity)
 # .firebaserc                          # Often *should* be committed if project aliases are shared, but ignore if developers use different project IDs locally
+
+# Firebase Debug Logs - Comprehensive patterns
 firebase-debug.log                    # Firebase CLI debug logs
+*firebase-debug.log                   # Firebase debug logs with prefix
 firestore-debug.log                   # Firestore emulator debug logs
+*firestore-debug.log                  # Firestore debug logs with prefix
 ui-debug.log                          # Firebase UI debug logs
+*ui-debug.log                         # UI debug logs with prefix
 functions-debug.log                   # Functions emulator debug logs
+*functions-debug.log                  # Functions debug logs with prefix
+database-debug.log                    # Realtime Database debug logs
+*database-debug.log                   # Database debug logs with prefix
+hosting-debug.log                     # Firebase Hosting debug logs
+*hosting-debug.log                    # Hosting debug logs with prefix
+storage-debug.log                     # Firebase Storage debug logs
+*storage-debug.log                    # Storage debug logs with prefix
 
 # --- Documentation specific ignores ---
 documentation/.DS_Store
 
 # Backend compiled output
 backend/lib/
+
+# Firebase debug logs (explicit patterns)
+firebase-debug.log
+firestore-debug.log
