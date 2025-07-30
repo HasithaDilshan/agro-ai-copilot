@@ -336,6 +336,16 @@ module1-edge-ai/venv/
 module2-knowledge-graph/venv/
 module3-multimodal-fusion/venv/
 module4-rl-optimization/venv/
+# Python virtual environments (explicit patterns)
+module1-edge-ai/.venv
+module2-knowledge-graph/.venv
+module3-multimodal-fusion/.venv
+module4-rl-optimization/.venv
+# Alternative venv naming patterns
+module1-edge-ai/venv
+module2-knowledge-graph/venv
+module3-multimodal-fusion/venv
+module4-rl-optimization/venv
 
 # Backend temporary models directory
 backend/temp_models/
