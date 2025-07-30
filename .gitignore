@@ -24,6 +24,7 @@ node_modules
 /node_modules/
 backend/node_modules/
 backend/node_modules
+backend/node/node_modules
 **/npm-debug.log      # npm debug logs
 **/yarn-error.log     # Yarn error logs
 **/dist/              # Compiled JavaScript output (common for TypeScript projects)
@@ -319,7 +320,7 @@ storage-debug.log                     # Firebase Storage debug logs
 documentation/.DS_Store
 
 # Backend compiled output
-backend/lib/
+backend/node/lib/
 
 # Firebase debug logs (explicit patterns)
 firebase-debug.log
@@ -338,3 +339,7 @@ module4-rl-optimization/venv/
 
 # Backend temporary models directory
 backend/temp_models/
+
+# Backend Python functions virtual environment
+backend/python/.venv/
+backend/python/venv/

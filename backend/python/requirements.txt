@@ -1,0 +1,6 @@
+tensorflow==2.18.0 # IMPORTANT: Must match the TF version you trained your model with!
+numpy
+functions-framework # For Google Cloud Functions Python HTTP triggers
+firebase-admin # For Firestore and Storage access
+google-cloud-storage # Implicitly used by tf.keras.utils.get_file for GCS URLs
+firebase_functions~=0.1.0

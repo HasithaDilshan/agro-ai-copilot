@@ -1,10 +1,44 @@
 {
-  "functions": {
-    "source": "backend",
-    "predeploy": [
-      "npm --prefix \"$RESOURCE_DIR\" run build"
-    ]
-  },
+  "functions": [
+    {
+      "source": "backend/node",
+      "codebase": "node-functions",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local",
+        "src/**/*.ts",
+        "tsconfig.json",
+        ".eslintrc.js"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run lint",
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ],
+      "runtime": "nodejs22"
+    },
+    {
+      "source": "backend/python",
+      "codebase": "python-functions",
+      "ignore": [
+        "venv",
+        "__pycache__",
+        "*.pyc",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local",
+        ".pytest_cache",
+        "*.egg-info"
+      ],
+      "predeploy": [
+        "cd \"$RESOURCE_DIR\" && .\\venv\\Scripts\\activate && pip --quiet --disable-pip-version-check install -r requirements.txt -t ."
+      ],
+      "runtime": "python312"
+    }
+  ],
   "firestore": {
     "rules": "firestore.rules"
   },
