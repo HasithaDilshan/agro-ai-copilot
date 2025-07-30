@@ -13,6 +13,11 @@ android {
     compileSdk = 35 // Updated to latest
     ndkVersion = "27.2.12479018" // Updated to NDK 27
 
+    aaptOptions {
+        noCompress("tflite") // Prevent compression of TFLite models
+        noCompress("lite")   // For .lite models if you have them
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
